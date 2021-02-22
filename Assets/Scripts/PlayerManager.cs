@@ -146,7 +146,10 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    // ゴール用のオブジェクトとの衝突判定
+
+
+
+    // 衝突判定
     void OnTriggerEnter2D(Collider2D col)
     {
         if (goalManager.GetComponent<GoalManager>().gameMode != GoalManager.GAME_MODE.PLAY)
@@ -154,6 +157,13 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+
+        if (col.gameObject.tag == "Trap")
+        {
+            Debug.Log("Death");
+        }
+
+        // ゴール用のオブジェクトとの衝突判定
         if (col.gameObject.tag == "Goal")
         {
             Debug.Log("Clear");
