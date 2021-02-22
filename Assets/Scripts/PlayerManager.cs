@@ -5,16 +5,16 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    public GameObject goal;
+    public GameObject goalManager;
 
-    public LayerMask blockLayer;		// ブロックレイヤー
+    public LayerMask tileMapLayer;		// ブロックレイヤー
 
     private Rigidbody2D rbody;          // プレイヤー制御用rigidbody2D
-    private const float MOVE_SPEED = 100; // 移動速度固定値
+    private const float MOVE_SPEED = 200; // 移動速度固定値
     private float moveSpeed;                   // 移動速度
-    private float jumpPower = 4000;      // ジャンプの力
+    private float jumpPower = 30000;      // ジャンプの力
     private bool goJump = false;        // ジャンプしたか否か
-    //private bool canJump = false;		// ブロックに設置しているか否か
+    private bool canJump = false;		// ブロックに設置しているか否か
     private bool usingButtons = false;	// ボタンを押しているか否か
  
     public enum MOVE_DIR
@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
         LEFT,
         RIGHT,
     };
+
     private MOVE_DIR moveDirection = MOVE_DIR.STOP;   // 移動方向、開始時は動いていないのでMOVE_DIR.STOPをセット
 
 
@@ -36,11 +37,11 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         // 足元の衝突判定、特定のLayerに属するColliberが存在する場合、trueを返す
-        //canJump =
-        //Physics2D.Linecast(transform.position - (transform.right * 0.3f),
-        //       transform.position - (transform.up * 0.1f), blockLayer) ||
-        //Physics2D.Linecast(transform.position + (transform.right * 0.3f),
-        //       transform.position - (transform.up * 0.1f), blockLayer);
+        canJump =
+        Physics2D.Linecast(transform.position - (transform.right * 100.5f),
+               transform.position - (transform.up * 100.3f), tileMapLayer) ||
+        Physics2D.Linecast(transform.position + (transform.right * 100.5f),
+               transform.position - (transform.up * 100.3f), tileMapLayer);
 
         if (!usingButtons)
         {
@@ -94,6 +95,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
+
+    ///////////////////////////////////////////////////////////////
+    //
+    //         画面上に操作ボタンを置く場合に使用
+    //
+    ///////////////////////////////////////////////////////////////
+
+
     // 左ボタンを押した
     public void PushLeftButton()
     {
@@ -101,6 +111,7 @@ public class PlayerManager : MonoBehaviour
         usingButtons = true;
     }
 
+    ///
     // 右ボタンを押した
     public void PushRightButton()
     {
@@ -115,23 +126,37 @@ public class PlayerManager : MonoBehaviour
         usingButtons = false;
     }
 
+    ///////////////////////////////////////////////////////////////
+    //
+    //         画面上に操作ボタンを置く場合に使用
+    //
+    ///////////////////////////////////////////////////////////////
+
+
     // ジャンプボタンを押した
     public void PushJumpButton()
     {
-        //if (canJump)
-        //{
+        Debug.Log("space");
+        Debug.Log(canJump);
+        if (canJump)
+        {
             goJump = true;
-        //}
+        }
     }
 
 
 
-    // 
+    // ゴール用のオブジェクトとの衝突判定
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (goal)
+        if (goalManager.GetComponent<GoalManager>().gameMode != GoalManager.GAME_MODE.PLAY)
         {
+            return;
+        }
 
+        if (col.gameObject.tag == "Goal")
+        {
+            Debug.Log("Clear");
         }
     }
 
