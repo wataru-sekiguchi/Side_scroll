@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    public GameObject goalManager;
+    public GameObject gameManager;
+    private GameObject itemBoxManager;
 
     public LayerMask tileMapLayer;		// ブロックレイヤー
 
@@ -15,8 +16,17 @@ public class PlayerManager : MonoBehaviour
     private float jumpPower = 30000;      // ジャンプの力
     private bool goJump = false;        // ジャンプしたか否か
     private bool canJump = false;		// ブロックに設置しているか否か
-    private bool usingButtons = false;	// ボタンを押しているか否か
- 
+    private bool usingButtons = false;  // ボタンを押しているか否か
+
+    private int useApple = -1;      // 
+
+
+    [SerializeField] GameObject _burret; //弾のプレファブ。inspectorで指定する
+
+
+
+
+
     public enum MOVE_DIR
     {                      // 移動方向定義、ここで定義したものをmoveDirectionに記録
         STOP,
@@ -31,6 +41,8 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();   // 開始時にRigidbody2Dコンポーネントをセットし、物理エンジンを利用可能にしている
+        itemBoxManager = GameObject.Find("ItemBoxManager");
+
     }
 
     // Update is called once per frame
@@ -61,9 +73,13 @@ public class PlayerManager : MonoBehaviour
                     moveDirection = MOVE_DIR.RIGHT;
                 }
             }
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKeyDown("up"))
             {
                 PushJumpButton();
+            }
+            if (Input.GetKeyDown("space"))
+            {
+                Shot();
             }
         }
     }
@@ -99,7 +115,7 @@ public class PlayerManager : MonoBehaviour
 
     ///////////////////////////////////////////////////////////////
     //
-    //         画面上に操作ボタンを置く場合に使用
+    //         ↓　画面上に操作ボタンを置く場合に使用　↓
     //
     ///////////////////////////////////////////////////////////////
 
@@ -128,7 +144,7 @@ public class PlayerManager : MonoBehaviour
 
     ///////////////////////////////////////////////////////////////
     //
-    //         画面上に操作ボタンを置く場合に使用
+    //         ↑　画面上に操作ボタンを置く場合に使用　↑
     //
     ///////////////////////////////////////////////////////////////
 
@@ -136,8 +152,8 @@ public class PlayerManager : MonoBehaviour
     // ジャンプボタンを押した
     public void PushJumpButton()
     {
-        Debug.Log("space");
-        Debug.Log(canJump);
+        //Debug.Log("space");
+        //Debug.Log(canJump);
         if (canJump)
         {
             goJump = true;
@@ -148,22 +164,31 @@ public class PlayerManager : MonoBehaviour
 
 
 
-
     // 衝突判定
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (goalManager.GetComponent<GoalManager>().gameMode != GoalManager.GAME_MODE.PLAY)
+        if (gameManager.GetComponent<GameManager>().gameMode != GameManager.GAME_MODE.PLAY)
         {
             return;
         }
 
-
-        if (col.gameObject.tag == "Trap")
+        // 罠オブジェクトとの衝突判定
+        if (col.gameObject.tag == "Trap" || col.gameObject.tag == "Enemy")
         {
-            Debug.Log("Death");
+            gameManager.GetComponent<GameManager>().GameOver();
+            DestroyPlayer();
+            Debug.Log("GameOver");
         }
 
-        // ゴール用のオブジェクトとの衝突判定
+        // アイテムオブジェクトとの衝突判定
+        if (col.gameObject.tag == "Item")
+        {
+            col.gameObject.GetComponent<ItemManager>().GetItem();
+            Debug.Log("GetItem");
+        }
+
+
+        // ゴール用オブジェクトとの衝突判定
         if (col.gameObject.tag == "Goal")
         {
             Debug.Log("Clear");
@@ -171,5 +196,32 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+    //
+    void DestroyPlayer()
+    {
+        Destroy(this.gameObject);
+    }
+
+
+    ///////////////////////////////////////////////////////////////
+    //
+    //         ↓　弾を撃つ動作に使用　↓
+    //
+    ///////////////////////////////////////////////////////////////
+
+
+
+    private void Shot()
+    {        
+        Instantiate(_burret, transform.position, transform.rotation);       // 弾をプレイヤーと同じ位置/角度で作成
+        itemBoxManager.GetComponent<ItemBoxManager>().AddCount(useApple);    // ItemBoxManagerの獲得数カウント処理に獲得数量を渡す
+    }
+
+
+    ///////////////////////////////////////////////////////////////
+    //
+    //         ↑　弾を撃つ動作に使用　↑
+    //
+    ///////////////////////////////////////////////////////////////
 
 }

@@ -259,6 +259,7 @@ MonoBehaviour:
   tileMapLayer:
     serializedVersion: 2
     m_Bits: 256
+  _burret: {fileID: 2582342776945133731, guid: a0a738b5363076e4a8130b36f4328d5f, type: 3}
 --- !u!61 &35866540
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -526,7 +527,7 @@ GameObject:
   - component: {fileID: 332056407}
   m_Layer: 8
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
