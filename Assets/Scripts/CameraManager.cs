@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
 
-        if (player.transform.position.x > 480 && player.transform.position.x < 1480)
+        if (player.transform.position.x > 480 && player.transform.position.x < 3360)
         {
             transform.position = new Vector3(player.transform.position.x, 320, -10);
         }

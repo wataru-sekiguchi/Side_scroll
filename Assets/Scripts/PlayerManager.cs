@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject gameManager;
     private GameObject itemBoxManager;
+    //private GameObject bulletManager;
 
     public LayerMask tileMapLayer;		// ブロックレイヤー
 
@@ -19,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     private bool usingButtons = false;  // ボタンを押しているか否か
 
     private int useApple = -1;      // 
+    public int direction = 1; // 発射方向
 
 
     [SerializeField] GameObject _burret; //弾のプレファブ。inspectorで指定する
@@ -42,7 +44,7 @@ public class PlayerManager : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody2D>();   // 開始時にRigidbody2Dコンポーネントをセットし、物理エンジンを利用可能にしている
         itemBoxManager = GameObject.Find("ItemBoxManager");
-
+        //bulletManager = GameObject.Find("BulletManager");
     }
 
     // Update is called once per frame
@@ -94,10 +96,14 @@ public class PlayerManager : MonoBehaviour
                 break;
             case MOVE_DIR.LEFT:   // 左に移動
                 moveSpeed = MOVE_SPEED * -1;
+                direction = -1;
+                //bulletManager.GetComponent<BulletManager>().BulletDirection(-1);    // 
                 //transform.localScale = new Vector2(-1, 1);   // 画像反転処理
                 break;
             case MOVE_DIR.RIGHT: // 右に移動
                 moveSpeed = MOVE_SPEED;
+                direction = 1;
+                //bulletManager.GetComponent<BulletManager>().BulletDirection(1);    // 
                 //transform.localScale = new Vector2(1, 1);    // 画像反転処理
                 break;
         }
