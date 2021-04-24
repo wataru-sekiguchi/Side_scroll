@@ -2372,6 +2372,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3981265649260381929, guid: 3bea00c18e3f0814db25ec49b32da2d9,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3981265649260381930, guid: 3bea00c18e3f0814db25ec49b32da2d9,
         type: 3}
       propertyPath: m_Name
@@ -7269,7 +7274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9d07c28402b1e449e0fee41eaf04b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  tileMapLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!70 &2128536116
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -7301,7 +7308,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 10
+  m_GravityScale: 100
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
