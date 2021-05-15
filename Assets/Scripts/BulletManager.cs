@@ -44,7 +44,7 @@ public class BulletManager : MonoBehaviour
     {
 
         // 地面との衝突判定
-        if (col.gameObject.tag == "Tile")
+        if (col.gameObject.tag == "Tile" || col.gameObject.tag == "Enemy")
         {
             Destroy(this.gameObject);
         }

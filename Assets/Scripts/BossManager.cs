@@ -18,7 +18,13 @@ public class BossManager : MonoBehaviour
     private int jumpOn;
     private float jumpPower = 35000;      // ジャンプの力
     private bool canJump = false;       // ブロックに設置しているか否か
-    public LayerMask tileMapLayer;		// ブロックレイヤー
+    public LayerMask tileMapLayer;      // ブロックレイヤー
+
+    private int hitCount;      // リンゴが当たった回数
+
+    private float stopTime = 0.8f;   // 点滅時間
+    private float timeMeasurement;   // 時間計測
+    private bool isDamaged = false; // 弾に当たったか
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +51,6 @@ public class BossManager : MonoBehaviour
         distance = p_pos - e_pos;
 
 
-
-        // じわじわ追跡
-        //rbody.AddForce(force, ForceMode2D.Force);
 
 
 
@@ -83,15 +86,44 @@ public class BossManager : MonoBehaviour
 
         }
 
+        //弾に当たった時の処理
+        if (isDamaged)
+        {
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 20));
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, level);
+            timeMeasurement += Time.deltaTime;
+            //Debug.Log(timeMeasurement);
+            if (timeMeasurement > stopTime)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                timeMeasurement = 0.0f;
+                isDamaged = false;
+            }
+        }
+
 
 
     }
 
 
-    void FixedUpdate()
-    {
 
-        //rbody.velocity = new Vector2(MOVING_SPEED, rbody.velocity.y);   // Rigidbody2Dコンポーネントのvelocityに速度を設定、y軸は変更がないのでそのまま
+
+    // 衝突判定
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        // リンゴと衝突判定
+        if (col.gameObject.tag == "BulletApple")
+        {
+            hitCount += 1;
+            isDamaged = true;
+            //Debug.Log("Hit = " + hitCount);
+
+            if (hitCount == 5)
+            {                
+                Destroy(this.gameObject);
+            }
+
+        }
 
     }
 
