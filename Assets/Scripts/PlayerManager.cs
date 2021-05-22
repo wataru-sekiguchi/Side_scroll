@@ -205,7 +205,7 @@ public class PlayerManager : MonoBehaviour
     //
     void DestroyPlayer()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 
 

@@ -2225,6 +2225,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 513016284623654422, guid: 3bea00c18e3f0814db25ec49b32da2d9,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 242484542}
     - target: {fileID: 3981265649260381926, guid: 3bea00c18e3f0814db25ec49b32da2d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6748,7 +6753,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 100

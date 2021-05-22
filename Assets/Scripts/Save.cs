@@ -18,12 +18,14 @@ public class Save : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 tmp = GameObject.Find("TX Village Props Scarecrow").transform.position;
+        Vector3 tmp = GameObject.Find("Player").transform.position; // 20210522_tamura change
+        //Vector3 tmp = GameObject.Find("TX Village Props Scarecrow").transform.position;
 
         PlayerPrefs.SetFloat("Player_x", PlayerPrefs.GetFloat("Player_x"));
         PlayerPrefs.SetString("Stage", PlayerPrefs.GetString("Stage"));
 
-        GameObject.Find("TX Village Props Scarecrow").transform.position = new Vector3(tmp.x = PlayerPrefs.GetFloat("Player_x"), tmp.y, tmp.z);
+        GameObject.Find("Player").transform.position = new Vector3(tmp.x = PlayerPrefs.GetFloat("Player_x"), tmp.y, tmp.z); // 20210522_tamura change
+        //GameObject.Find("TX Village Props Scarecrow").transform.position = new Vector3(tmp.x = PlayerPrefs.GetFloat("Player_x"), tmp.y, tmp.z);
     }
 
     // Update is called once per frame
@@ -33,7 +35,8 @@ public class Save : MonoBehaviour
 
     public void OnClickSave()
     {
-        Vector3 tmp = GameObject.Find("TX Village Props Scarecrow").transform.position;
+        Vector3 tmp = GameObject.Find("Player").transform.position; // 20210522_tamura change
+        //Vector3 tmp = GameObject.Find("TX Village Props Scarecrow").transform.position;
 
         //座標保存
         Debug.Log("★ステージと座標のSAVE");
