@@ -8,7 +8,9 @@ public class BossManager : MonoBehaviour
     private Rigidbody2D rbody;          // 制御用rigidbody2D
     private float MOVING_SPEED = 100;
 
-    private GameObject PlayerObject; // playerオブジェクトを受け取る器
+    private GameObject playerObject; // playerオブジェクトを受け取る器
+    private GameObject gameManager; // playerオブジェクトを受け取る器
+
     private Transform Player; // プレイヤーの座標情報などを受け取る器
 
     private float distance;
@@ -32,9 +34,10 @@ public class BossManager : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();   // 開始時にRigidbody2Dコンポーネントをセットし、物理エンジンを利用可能にしている
 
         // playerのGameObjectを探して取得
-        PlayerObject = GameObject.Find("Player");
+        playerObject = GameObject.Find("Player");
+        gameManager = GameObject.Find("GameManager");
         // playerのTransform情報を取得
-        Player = PlayerObject.transform;
+        Player = playerObject.transform;
     }
 
     // Update is called once per frame
@@ -121,6 +124,7 @@ public class BossManager : MonoBehaviour
             if (hitCount == 5)
             {                
                 Destroy(this.gameObject);
+                gameManager.GetComponent<GameManager>().GameClear(0);
             }
 
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    public GameObject gameManager;
+    private GameObject gameManager;
     private GameObject itemBoxManager;
     //private GameObject bulletManager;
 
@@ -44,6 +44,7 @@ public class PlayerManager : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody2D>();   // 開始時にRigidbody2Dコンポーネントをセットし、物理エンジンを利用可能にしている
         itemBoxManager = GameObject.Find("ItemBoxManager");
+        gameManager = GameObject.Find("GameManager");
         //bulletManager = GameObject.Find("BulletManager");
     }
 

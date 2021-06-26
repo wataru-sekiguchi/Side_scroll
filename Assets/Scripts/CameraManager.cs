@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class CameraManager : MonoBehaviour
 {
     public GameObject player;
@@ -15,11 +17,14 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (player.transform.position.x > 480 && player.transform.position.x < 3360)
+        if (SceneManager.GetActiveScene().name != "Stage3")
         {
-            transform.position = new Vector3(player.transform.position.x, 320, -10);
+            if (player.transform.position.x > 480 && player.transform.position.x < 3360)
+            {
+                transform.position = new Vector3(player.transform.position.x, 320, -10);
+            }
         }
+
 
 
 
